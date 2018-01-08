@@ -55,4 +55,5 @@
         String patternMac = "^[a-f0-9]{2}(:[a-f0-9]{2}){5}$";
         return Pattern.compile(patternMac).matcher(macAddress).find();
     }
-
+### 3.对360加固后的apk反编译成功的参考文章
+   http://www.cnblogs.com/AsionTang/p/7390591.html
