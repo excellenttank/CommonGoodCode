@@ -57,3 +57,41 @@
     }
 ### 3.对360加固后的apk反编译成功的参考文章
    http://www.cnblogs.com/AsionTang/p/7390591.html
+### 4.将bitmap保存到手机内存
+    public void saveBitmap(Bitmap bitmap) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(), "asave_image");
+        if (!appDir.exists()) {
+            appDir.mkdirs();
+        }
+        String fileName = "temp_image" + System.currentTimeMillis() + ".png";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+### 5.将字节数组转为Bitmap
+    private Bitmap byte2bitmap(byte[] bytes, int width, int height) {
+        Bitmap bitmap = null;
+        final int w = width; // 宽度
+        final int h = height;
+        final YuvImage image = new YuvImage(bytes, ImageFormat.NV21, w, h, null);
+        ByteArrayOutputStream os = new ByteArrayOutputStream(bytes.length);
+        if (!image.compressToJpeg(new Rect(0, 0, w, h), 100, os)) {
+            return null;
+        }
+        byte[] tmp = os.toByteArray();
+        bitmap = BitmapFactory.decodeByteArray(tmp, 0, tmp.length);
+
+        Matrix matrix = new Matrix();
+        matrix.setRotate(0);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        return bitmap;
+    }
+
