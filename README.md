@@ -130,3 +130,45 @@
     }
 ### 6.qq分享返回的时候出现两个一样的应用程序让选择
     出现这种问题的原因可能是因为配置了两次com.tencent.tauth.AuthActivity，如果确认只调用了一次，确认是否调用了某个shareSdk
+### 7.TabLayout设置Indicator线的padding
+    public void wrapTabIndicatorToTitle(TabLayout tabLayout) {
+        View tabStrip = tabLayout.getChildAt(0);
+        if (tabStrip instanceof ViewGroup) {
+            ViewGroup tabStripGroup = (ViewGroup) tabStrip;
+            int childCount = ((ViewGroup) tabStrip).getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View tabView = tabStripGroup.getChildAt(i);
+                //set minimum width to 0 for instead for small texts, indicator is not wrapped as expected
+                tabView.setMinimumWidth(0);
+                // set padding to 0 for wrapping indicator as title
+                tabView.setPadding(0, tabView.getPaddingTop(), 0, tabView.getPaddingBottom());
+                // setting custom margin between tabs
+                if (tabView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
+                    if (i == 0) {
+                        // left
+                        settingMargin(layoutParams);
+                    } else if (i == childCount - 1) {
+                        // right
+                        settingMargin(layoutParams);
+                    } else {
+                        // internal
+                        settingMargin(layoutParams);
+                    }
+                }
+            }
+
+            tabLayout.requestLayout();
+        }
+    }
+
+    private void settingMargin(ViewGroup.MarginLayoutParams layoutParams) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            layoutParams.setMarginStart(SizeUtils.dp2px(30));
+            layoutParams.setMarginEnd(SizeUtils.dp2px(30));
+        } else {
+            layoutParams.leftMargin = SizeUtils.dp2px(30);
+            layoutParams.rightMargin = SizeUtils.dp2px(30);
+        }
+    }
