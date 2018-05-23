@@ -172,3 +172,6 @@
             layoutParams.rightMargin = SizeUtils.dp2px(30);
         }
     }
+### 8.EditText默认不弹出键盘
+    android:focusable="true"
+    android:focusableInTouchMode="true"
