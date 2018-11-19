@@ -182,3 +182,22 @@
    具体操作方法比如kotlin-compiler-embeddable-1.2.71.jar这个jar包有27.7M大小，当时在gradle中的下载速度是30-50K，10分钟都下载不完，我们现在想着    要手动下载，我们去jcenter的官网根据gradle中的下载链接我们找到他的下载地址是“jcenter.bintray.com/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.2.71/kotlin-compiler-embeddable-1.2.71.jar”
     
    我们用迅雷下载，下载速度非常快，我们拿到jar包后放在C:\Users\你的电脑名称\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-compiler-embeddable\1.2.71\b394ac31590bff78aea6619b8dc0e2c0958aa599，后面的b394ac31590bff78aea6619b8dc0e2c0958aa599是当初gradle尝试下载时建立的下载目录，直接把jar文件放进去即可，再次sync项目就可以了，这个方法同样适用于其他jar包。
+
+### 10.com.blankj:utilcode中PermissionUtils用法记录
+    PermissionUtils.permission(PermissionConstants.CAMERA, PermissionConstants.STORAGE, PermissionConstants.LOCATION,               PermissionConstants.PHONE).rationale(new PermissionUtils.OnRationaleListener() {
+                        @Override
+                        public void rationale(final ShouldRequest shouldRequest) {
+                        }
+                    }).callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(List<String> permissionsGranted) {
+                            LogUtils.d(permissionsGranted);
+                            afterRequestPermission();
+                        }
+
+                        @Override
+                        public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                            LogUtils.d(permissionsDeniedForever, permissionsDenied);
+                            afterRequestPermission();
+                        }
+                    }).request();
