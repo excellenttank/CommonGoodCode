@@ -203,3 +203,8 @@
                     }).request();
 ### 11.Vultr VPS搭建SS教程
   https://www.hellojava.club/article/27
+### 12.优化启动白屏
+  <item name="android:windowDisablePreview">true</item>
+  <item name="android:windowIsTranslucent">true</item>
+  
+
