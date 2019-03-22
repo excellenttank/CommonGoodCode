@@ -207,5 +207,28 @@
   item name="android:windowDisablePreview">true</item
   
   item name="android:windowIsTranslucent">true</item
+### 13.配置VPS及加速
+    1.
+    wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+
+    2.
+    chmod +x shadowsocks.sh
+    ./shadowsocks.sh 2>&1 | tee shadowsocks.log
+
+    3.
+    systemctl stop firewalld.service
+
+    4.
+    ssserver -c /etc/shadowsocks.json -d start
+
+    5.
+    wget –no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+     chmod +x bbr.sh
+     ./bbr.sh
+
+    6.
+    lsmod | grep bbr
+
+  
   
 
