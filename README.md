@@ -228,6 +228,18 @@
 
     6.
     lsmod | grep bbr
+### 14.静默安装后用AlarmManager重启应用
+      private void alarmRestart() {
+          Intent intent = Utils.getApp().getPackageManager().getLaunchIntentForPackage(AppUtils.getAppPackageName());
+          PendingIntent restartIntent = PendingIntent.getActivity(Utils.getApp(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+          AlarmManager mgr = (AlarmManager) Utils.getApp().getSystemService(Context.ALARM_SERVICE);
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// 6.0及以上
+              mgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, restartIntent);
+  
+          } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {// 4.4及以上
+              mgr.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, restartIntent);
+          }
+      }
 
   
   
