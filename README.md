@@ -298,6 +298,18 @@
           return isDarkEnv;
 
       }
+### 17.系统应用集成中so文件报错
+    转自https://www.songma.com/news/txtlist_i25713v.html
+    假设需要集成的应用包名：com.dasu.shuai，apk 文件名：dasu.apk
+    在 system/app 目录下新建子目录，命名能表示那个应用就可，如：dasu
+    将 dasu.apk push 到 system/app/dasu/ 目录下
+    在 system/app/dasu 目录下新建子目录：lib/arm，这个命名是固定的，这样系统才可以识别
+    apk 编译打包时，可以删掉其余 CPU 架构的 so 文件，只保留 armeabi-v7a 就可（根据你们应用的客户设施场景为主）
+    解压 apk 文件，取出里面的 lib/armeabi-v7a 下的 so 文件，push 到 system/lib 或者 system/app/dasu/lib/arm 都可以
+    重启（假如应用初次集成需重启，否则 packages.xml 中无该应用的任何信息）
+    以上方案是针对我们应用自己的客户群场景的集成方式，假如想要通用，最好注意一下步骤 3 和 4，上述的这两个步骤目的在于让系统将该应用的 primaryCpuAbi     属性识别成 armeabi-v7a，这样就无需编译多个不同架构的 so 文件，集成也只要集成到 system/lib 目录中就可。
+
+    系统在扫描到 lib/arm 有这个目录存在时，会将 app 的 primaryCpuAbi 设置成 armeabi-v7a，相对应的，假如是 lib/arm64，那么就设置成 arm64-v8a，这     是在 api22 机子上测试的结果。
   
   
 
