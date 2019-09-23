@@ -310,6 +310,8 @@
     以上方案是针对我们应用自己的客户群场景的集成方式，假如想要通用，最好注意一下步骤 3 和 4，上述的这两个步骤目的在于让系统将该应用的 primaryCpuAbi     属性识别成 armeabi-v7a，这样就无需编译多个不同架构的 so 文件，集成也只要集成到 system/lib 目录中就可。
 
     系统在扫描到 lib/arm 有这个目录存在时，会将 app 的 primaryCpuAbi 设置成 armeabi-v7a，相对应的，假如是 lib/arm64，那么就设置成 arm64-v8a，这     是在 api22 机子上测试的结果。
+### 18.SSR多端口
+    http://www.aloneray.com/54.html
   
   
 
